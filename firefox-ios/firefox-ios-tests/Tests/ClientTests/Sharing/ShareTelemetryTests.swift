@@ -125,7 +125,6 @@ final class ShareTelemetryTests: XCTestCase {
 
         let expectedMetricType = type(of: GleanMetrics.ShareSheet.sharedTo)
         let resultMetricType = type(of: savedEvent)
-        
         let message = TelemetryDebugMessage(expectedMetric: expectedMetricType, resultMetric: resultMetricType)
         XCTAssert(resultMetricType == expectedMetricType, message.text)
         XCTAssertEqual(gleanWrapper.recordEventCalled, 1)
