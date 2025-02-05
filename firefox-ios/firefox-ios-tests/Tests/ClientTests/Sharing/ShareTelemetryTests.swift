@@ -40,7 +40,7 @@ final class ShareTelemetryTests: XCTestCase {
         )
 
         let savedEvent = try XCTUnwrap(
-            gleanWrapper.savedEvent as? EventMetricType<GleanMetrics.ShareSheet.SharedToExtra>
+            (gleanWrapper.savedEvents as? [EventMetricType<GleanMetrics.ShareSheet.SharedToExtra>])?.first
         )
 
         let savedExtras = try XCTUnwrap(
@@ -78,7 +78,7 @@ final class ShareTelemetryTests: XCTestCase {
         )
 
         let savedEvent = try XCTUnwrap(
-            gleanWrapper.savedEvent as? EventMetricType<GleanMetrics.ShareSheet.SharedToExtra>
+            (gleanWrapper.savedEvents as? [EventMetricType<GleanMetrics.ShareSheet.SharedToExtra>])?.first
         )
         let savedExtras = try XCTUnwrap(
             gleanWrapper.savedExtras as? GleanMetrics.ShareSheet.SharedToExtra
@@ -115,7 +115,7 @@ final class ShareTelemetryTests: XCTestCase {
         )
 
         let savedEvent = try XCTUnwrap(
-            gleanWrapper.savedEvent as? EventMetricType<GleanMetrics.ShareSheet.SharedToExtra>
+            (gleanWrapper.savedEvents as? [EventMetricType<GleanMetrics.ShareSheet.SharedToExtra>])?.first
         )
         let savedExtras = try XCTUnwrap(
             gleanWrapper.savedExtras as? GleanMetrics.ShareSheet.SharedToExtra
@@ -145,7 +145,7 @@ final class ShareTelemetryTests: XCTestCase {
         subject.sendOpenURLTimeRecord()
 
         let savedEvent = try XCTUnwrap(
-                gleanWrapper.savedEvent as? EventMetricType<GleanMetrics.Share.DeeplinkOpenUrlStartupTime>
+            (gleanWrapper.savedEvents as? [TimingDistributionMetricType])?.first
         )
         let recordedTime = try XCTUnwrap(gleanWrapper.savedExtras as? Int)
         let expectedMetricType = type(of: GleanMetrics.Share.deeplinkOpenUrlStartupTime)
@@ -164,7 +164,7 @@ final class ShareTelemetryTests: XCTestCase {
         try await Task.sleep(nanoseconds: 1_000)
         subject.cancelOpenURLTimeRecord()
 
-        XCTAssertNil(gleanWrapper.savedEvent)
+        XCTAssertNil(gleanWrapper.savedEvents)
         XCTAssertNil(gleanWrapper.savedExtras)
         XCTAssertEqual(gleanWrapper.recordEventCalled, 0)
     }
